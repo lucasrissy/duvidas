@@ -1,15 +1,14 @@
-package com.devsuperior.ecommerce.entities;
+package com.devsuperior.ecommerce.Entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,21 +17,17 @@ public class User {
     private String name;
     private String email;
     private String phone;
-    private LocalDate birthDate;
-    private String password;
 
     @OneToMany(mappedBy = "client") // o nome do atributo da outra classe associada
     private List<Order> orders = new ArrayList<>();
 
-    public User() {
+    public Client() {
     }
 
-    public User(String name, String email, String phone, LocalDate birthDate, String password) {
+    public Client(String name, String email, String phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.birthDate = birthDate;
-        this.password = password;
     }
 
     public Long getId() {
@@ -67,32 +62,17 @@ public class User {
         this.phone = phone;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
-    public boolean equals(Object o) {//jjhj
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(phone, user.phone) && Objects.equals(birthDate, user.birthDate) && Objects.equals(password, user.password) && Objects.equals(orders, user.orders);
+        Client client = (Client) o;
+        return Objects.equals(id, client.id) && Objects.equals(name, client.name) && Objects.equals(email, client.email) && Objects.equals(phone, client.phone)  && Objects.equals(orders, client.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, phone, birthDate, password, orders);
+        return Objects.hash(id, name, email, phone, orders);
     }
 }

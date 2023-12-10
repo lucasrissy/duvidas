@@ -1,4 +1,4 @@
-package com.devsuperior.ecommerce.entities;
+package com.devsuperior.ecommerce.Entities;
 
 import jakarta.persistence.*;
 
@@ -21,29 +21,22 @@ public class Product {
     @Column(columnDefinition = "TEXT") // permite um texto longo
     private String description;
 
-    private Double price;
+    @Column(name = "price")
+    private Double suggestedPrice;
 
-    private String imgUrl;
 
-    @ManyToMany
-    @JoinTable(name = "tb_product_category",
-                        joinColumns = @JoinColumn(name = "product_id"), //tem que ser o mesmo nome da classe atual
-                        inverseJoinColumns = @JoinColumn(name = "category_id")) //representa a outra classe
-    private Set<Category> categories = new HashSet<>();
-
-    @OneToMany(mappedBy = "id.product")
+    @OneToMany(mappedBy = "id.product", fetch = FetchType.EAGER)
     private Set<OrderItem> items = new HashSet<>();
 
-    public Product(Long id) {
-        this.id = id;
+    public Product() {
+
     }
 
-    public Product(Long id, String name, String description, Double price, String imgUrl) {
+    public Product(Long id, String name, String description, Double suggestedPrice) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.price = price;
-        this.imgUrl = imgUrl;
+        this.suggestedPrice = suggestedPrice;
     }
 
     public Long getId() {
@@ -70,24 +63,12 @@ public class Product {
         this.description = description;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getSuggestedPrice() {
+        return suggestedPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
+    public void setSuggestedPrice(Double suggestedPrice) {
+        this.suggestedPrice = suggestedPrice;
     }
 
     public Set<OrderItem> getItems() {
@@ -103,11 +84,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(imgUrl, product.imgUrl) && Objects.equals(categories, product.categories) && Objects.equals(items, product.items);
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(suggestedPrice, product.suggestedPrice)  && Objects.equals(items, product.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, price, imgUrl, categories, items);
+        return Objects.hash(id, name, description, suggestedPrice, items);
     }
 }

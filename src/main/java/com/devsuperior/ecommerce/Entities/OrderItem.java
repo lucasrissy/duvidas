@@ -1,4 +1,4 @@
-package com.devsuperior.ecommerce.entities;
+package com.devsuperior.ecommerce.Entities;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -24,7 +24,6 @@ public class OrderItem {
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
-        this.id = id;
         this.quantity = quantity;
         this.price = price;
     }
